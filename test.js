@@ -40,6 +40,13 @@ describe('Greeting', () => {
     });
   });
 
+  //Requirement 6
+  describe('Mixed case', () => {
+    it('Tests greeting with shouting and not shouting', () => {
+      expect(greet(["Amy", "BRIAN", "Charlotte"])).toEqual("Hello, Amy, and Charlotte. AND HELLO BRIAN!.");
+      
+    });
+  });
 
  //Requirement 7
  describe('String containing comma', () => {

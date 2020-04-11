@@ -6,7 +6,7 @@ function greet(names){
     if(names == ''){
         return 'Hello, my friend.';
     }
-    if(uppercase(names)){
+    if(shouting(names)){
         return 'HELLO ' + names + '!';
     }
     else{
@@ -14,11 +14,14 @@ function greet(names){
     }
 }
 
-function uppercase(name){
+function shouting(name){
     return name == name.toUpperCase();
 }
 
 function group(names){
+    if(names.some(shouting)){
+        return names.filter(name=>!shouting(name)).join(', and ') + '.' + ` AND HELLO ${names.filter(name=>shouting(name))}!`;
+    }
     if (names.length > 2){
         newNames = oxfordComma(names);
         return newNames.join('');
@@ -28,6 +31,7 @@ function group(names){
     }
 }
 
+/*adds oxford comma*/
 function oxfordComma(names){
     var namesWithCommas = [];
     n = names.length - 1;
@@ -45,18 +49,18 @@ function oxfordComma(names){
     return namesWithCommas;
 }
 
-/*takes array of names and returns array of names split */
+/*takes array of names and returns array of names split if they contain a delimiter or comma*/
 function parseNames(names) {
-    return names.reduce((greetGroup, name) => {
+    return names.reduce((parsedList, name) => {
         if (name.indexOf('"') !== -1) {
-            greetGroup.push(name.replace(/"/g, ''))
+            parsedList.push(name.replace(/"/g, ''))
         } else if (name.indexOf(',') !== -1) {
-            greetGroup.push(...name.split(',').map(name => name.trim()));
+            parsedList.push(...name.split(',').map(name => name.trim()));
 
         } else {
-            greetGroup.push(name)
+            parsedList.push(name)
         }
-        return greetGroup
+        return parsedList;
     }, [])
 }
 
